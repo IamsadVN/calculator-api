@@ -1,0 +1,38 @@
+{
+  "name": "calculator-api",
+  "version": "0.0.1",
+  "description": "An API for Calculate math using with Math.js and Express.js",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IamsadVN/calculator-api.git"
+  },
+  "keywords": [
+    "api",
+    "math"
+  ],
+  "author": "Iamsad_VN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IamsadVN/calculator-api/issues"
+  },
+  "homepage": "https://github.com/IamsadVN/calculator-api#readme",
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "chalk": "^5.4.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mathjs": "^14.4.0"
+  }
+}
