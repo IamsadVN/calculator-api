@@ -13,3 +13,10 @@ export interface LCMRequestBody {
 export interface FactRequestBody {
     number: number
 }
+
+export interface RandomNumberRequestBody {
+    type: "decimal" | "integer";
+    min?: number;
+    max: number;
+    amount?: number;
+}

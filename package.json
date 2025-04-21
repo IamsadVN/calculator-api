@@ -4,7 +4,7 @@
   "description": "An API for Calculate math using with Math.js and Express.js",
   "main": "start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --max-old-space-size=8192 .",
     "start": "node ."
   },
   "type": "module",
