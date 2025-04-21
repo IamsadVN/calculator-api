@@ -8,6 +8,9 @@ function getTime(): string {
 
 export const Logger = {
     info: (msg: string) => {
-        console.log(chalk.blue(getTime()),chalk.green("INFO"),chalk.white(msg));
+        console.log(chalk.blue(`[${getTime()}]`),chalk.green("[INFO]"),chalk.white(msg));
+    },
+    error: (msg: Error) => {
+        console.error(chalk.blue(`[${getTime()}]`),chalk.green("[INFO]"),chalk.red(msg));
     }
 }

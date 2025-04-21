@@ -9,3 +9,7 @@ export interface GCDRequestBody {
 export interface LCMRequestBody {
     numbers: number[]
 }
+
+export interface FactRequestBody {
+    number: number
+}
