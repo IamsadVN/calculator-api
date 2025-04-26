@@ -1,17 +1,17 @@
 export interface CalculationRequestBody {
-    expression: string
+    expression: string;
 }
 
 export interface GCDRequestBody {
-    numbers: number[]
+    numbers: number[];
 }
 
 export interface LCMRequestBody {
-    numbers: number[]
+    numbers: number[];
 }
 
 export interface FactRequestBody {
-    number: number
+    number: number;
 }
 
 export interface RandomNumberRequestBody {
@@ -19,4 +19,8 @@ export interface RandomNumberRequestBody {
     min?: number;
     max: number;
     amount?: number;
+}
+
+export interface NumberToBinaryRequestBody {
+    number: number;
 }

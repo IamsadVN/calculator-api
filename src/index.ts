@@ -15,11 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.enable("trust proxy")
 
-//Middlewares
 app.use(requestLogger)
 
 app.use("/",routers)
 
 app.listen(process.env.PORT, () => {
     Logger.info(`Server is running on port ${process.env.PORT}`);
-})
+});

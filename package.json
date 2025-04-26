@@ -22,11 +22,9 @@
     "url": "https://github.com/IamsadVN/calculator-api/issues"
   },
   "homepage": "https://github.com/IamsadVN/calculator-api#readme",
-  "devDependencies": {
-    "@types/node": "^22.14.1",
-    "typescript": "^5.8.3"
-  },
   "dependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "chalk": "^5.4.1",

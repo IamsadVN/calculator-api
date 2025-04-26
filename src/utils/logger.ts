@@ -11,6 +11,6 @@ export const Logger = {
         console.log(chalk.blue(`[${getTime()}]`),chalk.green("[INFO]"),chalk.white(msg));
     },
     error: (msg: Error) => {
-        console.error(chalk.blue(`[${getTime()}]`),chalk.green("[INFO]"),chalk.red(msg));
+        console.error(chalk.blue(`[${getTime()}]`),chalk.green("[ERROR]"),chalk.red(msg));
     }
 }

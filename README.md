@@ -1,6 +1,8 @@
 # Calculator API
 A project to handle all computational tasks entirely on the server side.
 
+*This is also a project for me to learn programming using JavaScript and TypeScript.*
+
 # Request
 - Node.js > 20
 - Port Forwarding
