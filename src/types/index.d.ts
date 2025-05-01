@@ -24,3 +24,7 @@ export interface RandomNumberRequestBody {
 export interface NumberToBinaryRequestBody {
     number: number;
 }
+
+export interface BinaryToNumberRequestBody {
+    binary: string
+}
