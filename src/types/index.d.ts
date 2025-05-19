@@ -31,7 +31,7 @@ export interface BinaryToNumberRequestBody {
 
 type BaseType = 2 | 8 | 10 | 16;
 export interface BaseNumberRequestBody {
-    value: number | string;
+    value: string | number;
     fromBase: BaseType;
     toBase: BaseType;
 }

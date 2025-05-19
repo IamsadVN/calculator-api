@@ -1,12 +1,11 @@
 {
   "name": "calculator-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An API for Calculate math using with Math.js and Express.js",
-  "main": "start.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "node --max-old-space-size=8192 .",
-    "start": "npx tsc && node dist/index.js",
-    "dev": "npx tsc && node -—max-old-space-size=8192 dist/index.js"
+    "start": "npx tsc && node .",
+    "dev": "npx tsc && node --max-old-space-size=8192 ."
   },
   "type": "module",
   "repository": {
@@ -23,11 +22,13 @@
     "url": "https://github.com/IamsadVN/calculator-api/issues"
   },
   "homepage": "https://github.com/IamsadVN/calculator-api#readme",
-  "dependencies": {
+  "devDependencies": {
     "@types/node": "^22.14.1",
-    "typescript": "^5.8.3",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
+    "@types/express": "^5.0.1"
+  },
+  "dependencies": {
+    "typescript": "^5.8.3",
     "chalk": "^5.4.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
