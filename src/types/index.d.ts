@@ -26,5 +26,12 @@ export interface NumberToBinaryRequestBody {
 }
 
 export interface BinaryToNumberRequestBody {
-    binary: string
+    binary: string;
+}
+
+type BaseType = 2 | 8 | 10 | 16;
+export interface BaseNumberRequestBody {
+    value: number | string;
+    fromBase: BaseType;
+    toBase: BaseType;
 }
