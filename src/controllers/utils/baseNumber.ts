@@ -9,7 +9,7 @@ export function baseNumber(req: Request<{}, {}, BaseNumberRequestBody>, res: Res
         return;
     }
 
-    const value: string = valueConvert(`${req.body.value}`, fromBase);
+    const value: string = valueConvert(req.body.value, fromBase);
 
     if (!fromBase) {
         res.status(400).json({ error: "Missing argument: fromBase is required." });

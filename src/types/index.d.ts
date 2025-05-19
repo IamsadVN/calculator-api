@@ -21,17 +21,9 @@ export interface RandomNumberRequestBody {
     amount?: number;
 }
 
-export interface NumberToBinaryRequestBody {
-    number: number;
-}
-
-export interface BinaryToNumberRequestBody {
-    binary: string;
-}
-
 type BaseType = 2 | 8 | 10 | 16;
 export interface BaseNumberRequestBody {
-    value: string | number;
+    value: string;
     fromBase: BaseType;
     toBase: BaseType;
 }
