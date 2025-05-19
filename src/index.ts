@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 import cors from "cors";
 
@@ -6,7 +6,7 @@ import routers from "./routers/index.js";
 import { Logger } from "./utils/logger.js";
 import { requestLogger } from "./middlewares/requestLogger.js";
 
-dotenv.config();
+config();
 
 const app = express();
 

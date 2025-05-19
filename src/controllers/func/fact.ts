@@ -16,6 +16,11 @@ export function factorization(req: Request<{}, {}, FactRequestBody>, res: Respon
         return;
     }
 
+    if (number > Number.MAX_SAFE_INTEGER) {
+        res.status(400).json({ error: "Number must not larger than MAX_SAFE_INTEGER in JavaScript" });
+        return;
+    }
+
     if (!math.isInteger(number)) {
         res.status(400).json({ error: "Number must be integer" });
         return;
@@ -24,7 +29,7 @@ export function factorization(req: Request<{}, {}, FactRequestBody>, res: Respon
     const factors = primeFactorization(number);
     const result = formatFactors(factors);
 
-    res.json({result});
+    res.json({ result });
 }
 
 function primeFactorization(number: number) {
