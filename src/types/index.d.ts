@@ -27,3 +27,16 @@ export interface BaseNumberRequestBody {
     fromBase: BaseType;
     toBase: BaseType;
 }
+
+export interface PolynomialRequestBody {
+    coeffs: [number, number, number, number]; 
+}
+
+export interface SimulEqRequestBody {
+    matrix: [
+        [number, number, ...number[]],
+        [number, number, ...number[]],
+        ...[[number, number, ...number[]]]
+    ]
+    col: number[]
+}
