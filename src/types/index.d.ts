@@ -40,3 +40,7 @@ export interface SimulEqRequestBody {
     ]
     col: number[]
 }
+
+export interface StatisticRequestBody {
+    dataset: "string" | number[];
+}
