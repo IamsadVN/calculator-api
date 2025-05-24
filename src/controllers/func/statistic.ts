@@ -3,6 +3,7 @@ import { StatisticRequestBody } from "../../types/index.js";
 import * as math from "mathjs";
 
 export function statistic(req: Request<{},{},StatisticRequestBody>, res: Response) {
+    // add them 1 property `config`
     let values: number[] = [];
 
     if (!req.body.dataset) {
@@ -17,37 +18,45 @@ export function statistic(req: Request<{},{},StatisticRequestBody>, res: Respons
         for (const segments of splitedData) {
             if (segments.length === 0) continue;
 
-            let data: number, time: number; 
-            const dataWithTime = segments.split("x");
+            let data: number, repeat: number; 
+            const dataWithRepeat = segments.split("x");
 
-            if (dataWithTime.length < 2) {
-                data = Number(dataWithTime[0]);
+            if (dataWithRepeat.length < 2) {
+                data = Number(dataWithRepeat[0]);
                 values.push(data);
                 continue;
             }
+            else if (dataWithRepeat.length > 2) {
+                res.status(400).json({error: "Invalid dataset format. Each segment must be in the format '<data>x<repeat>;..…'. For example: '5x3;2x2'" });
+                return;
+            }
             else {
-                if (dataWithTime[1].length === 0) {
-                    data = Number(dataWithTime[0]);
+                if (dataWithRepeat[1].length === 0) {
+                    data = Number(dataWithRepeat[0]);
                     values.push(data);
                     continue;
                 }
 
-                [data, time] = dataWithTime.map((element) => Number(element));
+                [data, repeat] = dataWithRepeat.map((element) => Number(element));
 
-                for (let i=1;i <= time;i++) {
+                for (let i=1;i <= repeat;i++) {
                     values.push(data);
                 }
             }
         }
     }
     else {
-        for (const element of req.body.dataset) {
-            if (typeof element === "string") {
+        const dataset = req.body.dataset;
+
+        values = new Array<number>(dataset.length);
+
+        for (let i=0;i < dataset.length;i++) {
+            if (typeof dataset[i] === "string") {
                 res.status(400).json({error: "The dataset must not have any element is a string"});
                 return;
             }
 
-            values.push(element);
+            values[i] = dataset[i];
         }
     }
 
@@ -58,18 +67,23 @@ export function statistic(req: Request<{},{},StatisticRequestBody>, res: Respons
     const result: StatisticResult = {
         min: math.min(values),
         max: math.max(values),
-        length: values.length,
-        mode: math.mode(values),
+        
         sum: math.sum(values),
         prod: math.prod(values),
+
         mean: math.mean(values),
-        median: math.median(values),
+        length: values.length,
+        mode: math.mode(values),
+        
+        // Tu phan vi cho nay co van de, co the sua sau
         quartile: {
             q1: math.quantileSeq(values,0.25,true),
             q2: math.quantileSeq(values,0.50,true),
             q3: math.quantileSeq(values,0.75,true),
         },
-        mad: math.mad(values)
+
+        mad: math.mad(values),
+        std: math.std(...values)
     }
 
     res.json({result});
@@ -83,11 +97,11 @@ interface StatisticResult {
     sum: number;
     prod: number;
     mean: number;
-    median: number;
     quartile: {
         q1: number;
         q2: number;
         q3: number;
     }
     mad: number;
+    std: number;
 }
