@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as math from "mathjs";
+import { Readable } from "stream";
 
 import { RandomNumberRequestBody } from "../../types/index.js";
 
@@ -22,9 +23,16 @@ export function randomNumber(req: Request<{}, {}, RandomNumberRequestBody>, res:
         return;
     }
     
-    //TODO: change the maximum allowed limit to 10^8 after using stream or buffer to send data
-    if (amount > 10**5) {
-        res.status(400).json({ error: "Amount exceeds the maximum allowed limit of 10^5" });
+    if (amount > 10**10) {
+        res.status(400).json({ error: "Amount exceeds the maximum allowed limit of 10^10" });
+        return;
+    }
+    if (max >= Number.MAX_SAFE_INTEGER) {
+        res.status(400).json({ error: "The 'max' value must not larger than `MAX_SAFE_INTEGER`"});
+        return;
+    }
+    if (min <= Number.MIN_SAFE_INTEGER) {
+        res.status(400).json({ error: "The 'min' value must not smaller than `MIN_SAFE_INTEGER`"});
         return;
     }
 
@@ -33,30 +41,40 @@ export function randomNumber(req: Request<{}, {}, RandomNumberRequestBody>, res:
         return;
     }
 
-    const result = getRandValue(type,min,max,amount);
+    res.on("close", () => {
+        stream.destroy();
+    });
 
-    //TODO: using stream or buffer to send data to client
-    res.json({result});
+    let index = 0;
+    const stream = new Readable({
+        read() {
+            if (index === 0) {
+                this.push("{\"result\":[");
+            }
+
+            while (index < amount) {
+                const isLast = index === amount - 1;
+                const value =
+                type === "integer"
+                    ? math.randomInt(min, max)
+                    : math.random(min, max);
+                const chunk = JSON.stringify(value) + (isLast ? "" : ",");
+
+                index++;
+
+                const ok = this.push(chunk);
+                if (!ok) return; // pause if buffer full
+            }
+
+            // End JSON array and object
+            if (index >= amount) {
+                this.push("]}");
+                this.push(null); // signal end
+            }
+        },
+    });
+
+    stream.pipe(res);
 }
 
-function getRandValue(
-    type: "decimal" | "integer", 
-    min: number, 
-    max: number, 
-    amount: number
-) {
-    let arrResult: number[] = [];
-
-    if (type === "decimal") {
-        for (let i = 1; i <= amount; i++) {
-            arrResult.push(math.random(min,max));
-        }
-    }
-    else if (type === "integer") {
-        for (let i = 1; i <= amount; i++) {
-            arrResult.push(math.randomInt(min,max));
-        }
-    }
-
-    return arrResult;
-}
+// Im using ChatGPT to help me generate the code to send data thourgh stream.pipe(), please dont bully me
