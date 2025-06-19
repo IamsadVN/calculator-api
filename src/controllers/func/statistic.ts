@@ -39,13 +39,18 @@ export function statistic(req: Request<{},{},StatisticRequestBody>, res: Respons
 
                 [data, repeat] = dataWithRepeat.map((element) => Number(element));
 
+                if (repeat >= 10**8) {
+                    res.status(400).json({error: "The repeat value is too large. Please use a repeat value less than 100,000,000."});
+                    return;
+                }
+
                 for (let i=1;i <= repeat;i++) {
                     values.push(data);
                 }
             }
         }
     }
-    else {
+    else if (Array.isArray(req.body.dataset) === true) {
         const dataset = req.body.dataset;
 
         values = new Array<number>(dataset.length);
@@ -58,6 +63,10 @@ export function statistic(req: Request<{},{},StatisticRequestBody>, res: Respons
 
             values[i] = dataset[i];
         }
+    }
+    else {
+        res.status(400).json({error: "Invalid type for Dataset."});
+        return;
     }
 
     values.sort((a,b) => a-b);
