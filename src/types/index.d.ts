@@ -29,7 +29,7 @@ export interface BaseNumberRequestBody {
 }
 
 export interface PolynomialRequestBody {
-    coeffs: [number, number, number, number]; 
+    coeffs: [number, number, number?, number?, number?]; 
 }
 
 export interface SimulEqRequestBody {
