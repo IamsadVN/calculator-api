@@ -6,20 +6,20 @@ export function polynomial(req: Request<{}, {}, PolynomialRequestBody>, res: Res
     const { coeffs } = req.body;
 
     if (!coeffs) {
-        res.json({
+        res.status(400).json({
             error: "'coeffs' is required"
         });
         return;
     }
     if (!Array.isArray(coeffs)) {
-        res.json({
+        res.status(400).json({
             error: "'coeffs' must be an array and contain numbers"
         });
         return;
     }
     for (const element of coeffs) {
         if (typeof element !== "number") {
-            res.json({
+            res.status(400).json({
                 error: `Element "${element}" is not a number`
             });
             return;
@@ -52,16 +52,10 @@ export function polynomial(req: Request<{}, {}, PolynomialRequestBody>, res: Res
             return;
         }
         default: {
-            if (coeffs.length < 2) {
-                res.json({error: "'coeffs' must have between 2 to 5 elements"});
-                return;
-            }
-            if (coeffs.length > 5) {
-                res.json({error: "'coeffs' must not have over 5 elements"});
-                return;
-            }
-
-            break;
+            res.json({
+                error: "Supports to solve from linear to quartic only."
+            });
+            return;
         }
     }
 
