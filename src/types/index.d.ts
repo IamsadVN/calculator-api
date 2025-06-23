@@ -44,3 +44,12 @@ export interface SimulEqRequestBody {
 export interface StatisticRequestBody {
     dataset: "string" | number[];
 }
+
+export interface TableRequestBody {
+    functions: [
+        string, string?, string?, string?
+    ];
+    start: number;
+    end: number;
+    step: number;
+}
