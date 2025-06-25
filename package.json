@@ -34,6 +34,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mathjs": "^14.4.0",
+    "piscina": "^5.1.1",
     "typescript": "^5.8.3"
   }
 }
