@@ -14,17 +14,37 @@ export function findLCM(req: Request<{},{}, LCMRequestBody>, res: Response) {
         return;
     }
 
-    const result = lcm(numbers);
+    const bigIntArr: bigint[] = new Array<bigint>(numbers.length);
 
-    res.json({result});
-}
-
-function lcm(numbers: number[]) {
-    function gcd(a: number,b: number) {
-        if (b==0) return a;
-        
-        return gcd(b,a % b);
+    for (let i=0;i < numbers.length;i++) {
+        if (typeof numbers[i] !== "number") {
+            res.status(400).json({
+                error: `Element at index ${i} is not a number`,
+                element: numbers[i]
+            });
+            return;
+        }
+        bigIntArr[i] = BigInt(numbers[i]);
     }
 
-    return numbers.reduce((a,b) => a * b / gcd(a,b));
+    const result = lcm(bigIntArr).toString();
+
+    res.json({ result });
+}
+
+function gcd(a: bigint, b: bigint) {
+    while (a > 0n && b > 0n) {
+        if (a > b) {
+            a = a % b;
+        }
+        else {
+            b = b % a;
+        }
+    }
+
+    return (a === 0n) ? b : a;
+}
+
+function lcm(numbers: bigint[]) {
+    return numbers.reduce((a, b) => a * b / gcd(a, b));
 }
