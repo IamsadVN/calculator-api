@@ -1,7 +1,8 @@
+import { lcmPool } from "../../workers/index.js";
 import { LCMRequestBody } from "../../types/index.js";
 import { Request, Response } from "express";
 
-export function findLCM(req: Request<{},{}, LCMRequestBody>, res: Response) {
+export async function findLCM(req: Request<{},{}, LCMRequestBody>, res: Response) {
     const { numbers } = req.body;
 
     if (!numbers) {
@@ -27,24 +28,7 @@ export function findLCM(req: Request<{},{}, LCMRequestBody>, res: Response) {
         bigIntArr[i] = BigInt(numbers[i]);
     }
 
-    const result = lcm(bigIntArr).toString();
+    const result = await lcmPool.run({ numbers: bigIntArr });
 
     res.json({ result });
-}
-
-function gcd(a: bigint, b: bigint) {
-    while (a > 0n && b > 0n) {
-        if (a > b) {
-            a = a % b;
-        }
-        else {
-            b = b % a;
-        }
-    }
-
-    return (a === 0n) ? b : a;
-}
-
-function lcm(numbers: bigint[]) {
-    return numbers.reduce((a, b) => a * b / gcd(a, b));
 }
