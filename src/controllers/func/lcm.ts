@@ -1,4 +1,4 @@
-import { lcmPool } from "../../workers/index.js";
+import { lcmPool } from "../../pools/index.js";
 import { LCMRequestBody } from "../../types/index.js";
 import { Request, Response } from "express";
 
